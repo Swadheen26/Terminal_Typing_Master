@@ -103,3 +103,71 @@ def getUserInput(p1):
                 p1.words += 1
 
         print()
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.words = 0
+        self.start_time = 0
+        self.end_time = 0
+        self.wpm = 0
+
+game_run = 1
+para_g = open('Source_file.txt', 'r')
+content = para_g.readlines()
+
+try:
+    fr = open('scorecard.json', 'r')
+    jsondata = json.loads(fr.read())
+except FileNotFoundError:
+    fr = open('scorecard.json', 'w+')
+    fr.write("{}")
+    fr.seek(0)
+    jsondata = json.loads(fr.read())
+
+players = len(jsondata)
+fr.close()
+
+while game_run:
+
+    end_flag = 0
+
+    player = input(Fore.MAGENTA + 'ENTER YOUR NAME : ' + Fore.RESET)          
+    p1 = Player(player)                       
+    
+    players += 1                                
+    jsondata['P' + str(players)] = {}                
+
+    t1 = Thread(target=getUserInput, args=(p1,))
+    t1.start()
+
+    t2 = Thread(target=monitorForQuit, args=(p1,))
+    t2.start()
+
+    t1.join()
+    t2.join()
+
+    input('\nPress ENTER to see the results')
+
+    print()
+    print(Fore.YELLOW + '1. Play another game')
+    print('2. Quit game')
+    option = input('Enter your option : ' + Fore.RESET)
+
+    if option == '2':
+        game_run = 0
+    elif option == '1':
+        pass
+    else:
+        print('You have entered an invalid option.')
+        print('Game will end')
+        break
+    print()
+
+para_g.close()
+
+fsw = open('scorecard.json', 'w')                    
+json.dump(jsondata, fsw, indent=4)
+fsw.close()
+
+print('Data saved successfully.')
