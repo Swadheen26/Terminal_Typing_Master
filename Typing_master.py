@@ -20,7 +20,7 @@ def update_leaderboard(file_path, username, wpm):
 
     with open(file_path, 'w') as f:
         json.dump(leaderboard, f, indent=4)
-
+        
 def show_leaderboard(file_path):
     file_path = 'scorecard.json'
     try:
