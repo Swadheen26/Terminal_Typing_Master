@@ -1,0 +1,14 @@
+{
+    "P1": {
+        "name": "Swadheen",
+        "words": 3,
+        "time": 11,
+        "wpm": 16
+    },
+    "P2": {
+        "name": "Rahul",
+        "words": 0,
+        "time": 14,
+        "wpm": 0
+    }
+}
