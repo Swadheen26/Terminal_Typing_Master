@@ -52,3 +52,27 @@ def showLeaderBoard():
     
     # Display the leaderboard
     show_leaderboard('scorecard.json')
+
+def monitorForQuit(p1):
+    global end_flag
+    while True:
+        if kb.is_pressed('ctrl+q'):
+            # print('User tried to quit')
+            end_flag = 1
+            break
+    p1.end_time = time()
+    p1.playtime = int(p1.end_time - p1.start_time)
+    p1.wpm = p1.words * 60 // p1.playtime
+
+    # Write the necessary data of current player to jsondata.
+    jsondata["P" + str(players)]['name'] = p1.name
+    jsondata["P" + str(players)]['words'] = p1.words
+    jsondata["P" + str(players)]['time'] = p1.playtime
+    jsondata["P" + str(players)]['wpm'] = p1.wpm
+
+    # Update the leaderboard
+    update_leaderboard('scorecard.json', p1.name, p1.wpm)
+
+    showLeaderBoard()
+
+    print('\nHIT ENTER')
