@@ -76,3 +76,30 @@ def monitorForQuit(p1):
     showLeaderBoard()
 
     print('\nHIT ENTER')
+
+def getUserInput(p1):
+    global end_flag
+    print('Start typing the paragraph shown to you. Press Ctrl+Q to exit')
+    p1.start_time = time()
+    
+    while True:
+        if end_flag == 1:
+            print('Your turn finished !!')
+            break
+
+        # Display the paragraph to the user.
+        current_sentence = random.choice(content).strip()
+        print()
+        print(Fore.BLUE + current_sentence + Fore.RESET)
+
+        # Get the user input.
+        user_inp = input()
+
+        current_sentence_words = current_sentence.split()
+        user_typed_words = user_inp.split()
+
+        for user_given in user_typed_words:
+            if user_given in current_sentence_words:
+                p1.words += 1
+
+        print()
